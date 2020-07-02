@@ -127,7 +127,7 @@ void matrix_scan_keymap(void) {
 
 #ifdef USE_LEDS_FOR_LAYERS
 // example of how to use LEDs as layer indicators
-static uint8_t top = 1;
+static uint8_t top = 0;
 static uint8_t middle = 0;
 static uint8_t bottom = 0;
 

@@ -41,3 +41,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               _______,          _______, _______, _______,                            _______,          _______,          RESET
   )
 };
+
+#ifdef USE_LEDS_FOR_LAYERS
+// example of how to use LEDs as layer indicators
+static uint8_t top = 1;
+static uint8_t middle = 0;
+static uint8_t bottom = 0;
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    top = middle = bottom = 0;
+    switch (get_highest_layer(state)) {
+    case _BASE:
+        top = 1;
+        break;
+    case _FN1:
+        middle = 1;
+        break;
+    default: //  for any other layers, or the default layer
+        break;
+    }
+  return state;
+}
+
+// override kb level function
+bool led_update_user(led_t usb_led) {
+    writePin(INDICATOR_PIN_0, !top);
+    writePin(INDICATOR_PIN_1, !middle);
+    writePin(INDICATOR_PIN_2, !bottom);
+    return false; // we are using LEDs for something else override kb
+}
+#endif
